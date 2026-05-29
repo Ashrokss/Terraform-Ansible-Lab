@@ -1,7 +1,7 @@
 <div align="center">
 
 <h1>
-  <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/azure/azure-original.svg" alt="Azure Logo" width="50" style="vertical-align: middle; margin-right: 15px;" /> 
+  <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/azure/azure-original.svg" alt="Azure Logo" width="50" style="vertical-align: text-bottom; margin-right: 15px;" />
   Azure Infrastructure Automation
 </h1>
 
@@ -174,7 +174,3 @@ Ensure that Docker and NGINX are successfully running on the application nodes.
 
 ---
 
-<br>
-<br>
-
-> *Implemented Azure infrastructure automation using Terraform and Ansible. Provisioned and managed multiple Ubuntu virtual machines, automated configuration management through centralized orchestration, and deployed Docker and NGINX across multiple servers using SSH-based automation workflows.*
