@@ -19,7 +19,7 @@
   <img src="https://img.shields.io/badge/ANSIBLE-EE0000?style=for-the-badge&logo=ansible&logoColor=white" alt="Ansible" />
 </p>
 
-<h3>DevOps Portfolio Project — Provisioning and Configuration Management on Azure</h3>
+<h3>Provisioning and Configuration Management on Azure</h3>
 
 </div>
 
