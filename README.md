@@ -1,12 +1,13 @@
 <div align="center">
 
-<h1>
-  <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/azure/azure-original.svg" alt="Azure Logo" width="50" style="vertical-align: text-bottom; margin-right: 15px;" />
-  Azure Infrastructure Automation
-</h1>
+<p align="center" style="margin-bottom: 25px;">
+  <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/azure/azure-original.svg" alt="Azure Logo" width="60" style="vertical-align: middle; margin-right: 15px;" />
+  <img src="./screenshots/title-light.svg#gh-light-mode-only" alt="Azure Infrastructure Automation" height="60" style="vertical-align: middle;" />
+  <img src="./screenshots/title-dark.svg#gh-dark-mode-only" alt="Azure Infrastructure Automation" height="60" style="vertical-align: middle;" />
+</p>
 
 <p align="center">
-  <kbd>DOCKER</kbd> | <kbd>UBUNTU 22.04</kbd> | <kbd>NGINX</kbd> | <kbd>SSH</kbd> | <kbd>CLOUD-INIT</kbd>
+  <img src="https://img.shields.io/badge/DOCKER%20%7C%20UBUNTU%2022.04%20%7C%20NGINX%20%7C%20SSH%20%7C%20CLOUD--INIT-1A1B27?style=for-the-badge" alt="Environment" />
 </p>
 
 <p align="center">
@@ -174,3 +175,6 @@ Ensure that Docker and NGINX are successfully running on the application nodes.
 
 ---
 
+## Conclusion
+
+This project demonstrates a robust approach to Infrastructure as Code (IaC) and configuration management. By leveraging **Terraform** for reliable, repeatable infrastructure provisioning and **Ansible** for centralized configuration, this setup minimizes manual intervention and ensures consistency across the Azure environment.
