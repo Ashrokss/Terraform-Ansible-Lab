@@ -1,9 +1,12 @@
 <div align="center">
 
+<p align="center" style="margin-bottom: 10px;">
+  <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/azure/azure-original.svg" alt="Azure Logo" width="120" />
+</p>
+
 <p align="center" style="margin-bottom: 25px;">
-  <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/azure/azure-original.svg" alt="Azure Logo" width="60" style="vertical-align: middle; margin-right: 15px;" />
-  <img src="./screenshots/title-light.svg#gh-light-mode-only" alt="Azure Infrastructure Automation" height="60" style="vertical-align: middle;" />
-  <img src="./screenshots/title-dark.svg#gh-dark-mode-only" alt="Azure Infrastructure Automation" height="60" style="vertical-align: middle;" />
+  <img src="./screenshots/title-light.svg#gh-light-mode-only" alt="Azure Infrastructure Automation" height="60" />
+  <img src="./screenshots/title-dark.svg#gh-dark-mode-only" alt="Azure Infrastructure Automation" height="60" />
 </p>
 
 <p align="center">

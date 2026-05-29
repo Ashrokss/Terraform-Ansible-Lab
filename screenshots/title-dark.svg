@@ -7,5 +7,5 @@
       fill: #ffffff;
     }
   </style>
-  <text x="0" y="50" class="title">Azure Infrastructure Automation</text>
+  <text x="50%" y="50%" dominant-baseline="middle" text-anchor="middle" class="title">Azure Infrastructure Automation</text>
 </svg>
