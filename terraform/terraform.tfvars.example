@@ -1,0 +1,32 @@
+# ============================================================================
+# Example Terraform Variable Values
+# Rename this file to 'terraform.tfvars' and update the values before running 'terraform apply'
+# ============================================================================
+
+# ---------- Azure Context ----------
+# Replace with your actual Azure Subscription ID
+subscription_id     = "00000000-0000-0000-0000-000000000000"
+
+# Provide the name of an existing resource group where you want to deploy
+resource_group_name = "Your-Resource-Group-Name"
+
+# The Azure region where resources will be deployed
+location            = "East US"
+
+# ---------- Networking ----------
+vnet_name               = "terraform-ansible-vnet"
+vnet_address_space      = ["10.0.0.0/16"]
+subnet_name             = "default-subnet"
+subnet_address_prefixes = ["10.0.1.0/24"]
+
+# ---------- Virtual Machines ----------
+admin_username = "azureuser"
+vm_size        = "Standard_D2s_v3"
+app_vm_count   = 3
+
+# ---------- Tags ----------
+tags = {
+  Project     = "Terraform-Ansible-Lab"
+  Environment = "Dev"
+  ManagedBy   = "Terraform"
+}

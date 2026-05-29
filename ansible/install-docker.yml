@@ -1,0 +1,95 @@
+---
+# ============================================================================
+# Playbook: Install Docker on Application VMs
+# ============================================================================
+# This playbook installs Docker CE on all application servers.
+# It performs the following:
+#   1. Installs prerequisite packages
+#   2. Adds Docker's official GPG key
+#   3. Adds Docker APT repository
+#   4. Installs Docker CE, CLI, and containerd
+#   5. Starts and enables Docker service
+#   6. Adds the azureuser to the docker group
+# ============================================================================
+
+- name: Install Docker on Application Servers
+  hosts: app_servers
+  become: true
+
+  tasks:
+    # ---------- Prerequisites ----------
+    - name: Update apt cache
+      apt:
+        update_cache: yes
+        cache_valid_time: 3600
+
+    - name: Install prerequisite packages
+      apt:
+        name:
+          - apt-transport-https
+          - ca-certificates
+          - curl
+          - gnupg
+          - lsb-release
+          - software-properties-common
+        state: present
+
+    # ---------- Docker GPG Key ----------
+    - name: Create keyrings directory
+      file:
+        path: /etc/apt/keyrings
+        state: directory
+        mode: '0755'
+
+    - name: Add Docker official GPG key
+      shell: |
+        curl -fsSL https://download.docker.com/linux/ubuntu/gpg | gpg --dearmor -o /etc/apt/keyrings/docker.gpg
+        chmod a+r /etc/apt/keyrings/docker.gpg
+      args:
+        creates: /etc/apt/keyrings/docker.gpg
+
+    # ---------- Docker APT Repository ----------
+    - name: Add Docker APT repository
+      shell: |
+        echo "deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/docker.gpg] https://download.docker.com/linux/ubuntu $(lsb_release -cs) stable" | tee /etc/apt/sources.list.d/docker.list > /dev/null
+      args:
+        creates: /etc/apt/sources.list.d/docker.list
+
+    - name: Update apt cache after adding Docker repo
+      apt:
+        update_cache: yes
+
+    # ---------- Install Docker ----------
+    - name: Install Docker CE packages
+      apt:
+        name:
+          - docker-ce
+          - docker-ce-cli
+          - containerd.io
+          - docker-buildx-plugin
+          - docker-compose-plugin
+        state: present
+
+    # ---------- Start & Enable Docker ----------
+    - name: Start and enable Docker service
+      systemd:
+        name: docker
+        state: started
+        enabled: yes
+
+    # ---------- Post-Install ----------
+    - name: Add azureuser to docker group
+      user:
+        name: azureuser
+        groups: docker
+        append: yes
+
+    # ---------- Verification ----------
+    - name: Verify Docker installation
+      command: docker --version
+      register: docker_version
+      changed_when: false
+
+    - name: Display Docker version
+      debug:
+        msg: "Docker installed successfully: {{ docker_version.stdout }}"

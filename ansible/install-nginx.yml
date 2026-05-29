@@ -1,0 +1,145 @@
+---
+# ============================================================================
+# Playbook: Install NGINX on Application VMs
+# ============================================================================
+# This playbook installs and configures NGINX on all application servers.
+# It performs the following:
+#   1. Installs NGINX
+#   2. Deploys a custom sample web page
+#   3. Starts and enables NGINX service
+#   4. Verifies NGINX is running
+# ============================================================================
+
+- name: Install and Configure NGINX on Application Servers
+  hosts: app_servers
+  become: true
+
+  tasks:
+    # ---------- Install NGINX ----------
+    - name: Update apt cache
+      apt:
+        update_cache: yes
+        cache_valid_time: 3600
+
+    - name: Install NGINX
+      apt:
+        name: nginx
+        state: present
+
+    # ---------- Deploy Custom Web Page ----------
+    - name: Deploy custom index.html
+      copy:
+        dest: /var/www/html/index.html
+        content: |
+          <!DOCTYPE html>
+          <html lang="en">
+          <head>
+              <meta charset="UTF-8">
+              <meta name="viewport" content="width=device-width, initial-scale=1.0">
+              <title>Terraform + Ansible Lab</title>
+              <style>
+                  * { margin: 0; padding: 0; box-sizing: border-box; }
+                  body {
+                      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+                      background: linear-gradient(135deg, #0f0c29, #302b63, #24243e);
+                      color: #ffffff;
+                      min-height: 100vh;
+                      display: flex;
+                      align-items: center;
+                      justify-content: center;
+                  }
+                  .container {
+                      text-align: center;
+                      padding: 40px;
+                      background: rgba(255, 255, 255, 0.05);
+                      border-radius: 20px;
+                      backdrop-filter: blur(10px);
+                      border: 1px solid rgba(255, 255, 255, 0.1);
+                      max-width: 600px;
+                  }
+                  h1 {
+                      font-size: 2.5rem;
+                      margin-bottom: 10px;
+                      background: linear-gradient(90deg, #00d2ff, #3a7bd5);
+                      -webkit-background-clip: text;
+                      -webkit-text-fill-color: transparent;
+                  }
+                  .subtitle {
+                      font-size: 1.1rem;
+                      color: #aaa;
+                      margin-bottom: 30px;
+                  }
+                  .info {
+                      background: rgba(0, 210, 255, 0.1);
+                      border: 1px solid rgba(0, 210, 255, 0.3);
+                      border-radius: 12px;
+                      padding: 20px;
+                      margin: 15px 0;
+                  }
+                  .info h3 { color: #00d2ff; margin-bottom: 8px; }
+                  .badge {
+                      display: inline-block;
+                      padding: 6px 14px;
+                      margin: 5px;
+                      border-radius: 20px;
+                      font-size: 0.85rem;
+                      background: rgba(58, 123, 213, 0.2);
+                      border: 1px solid rgba(58, 123, 213, 0.4);
+                  }
+                  .hostname { color: #00d2ff; font-weight: bold; }
+              </style>
+          </head>
+          <body>
+              <div class="container">
+                  <h1>🚀 Deployment Successful!</h1>
+                  <p class="subtitle">Terraform + Ansible Infrastructure Lab</p>
+                  <div class="info">
+                      <h3>Server Information</h3>
+                      <p>Hostname: <span class="hostname">{{ inventory_hostname }}</span></p>
+                      <p>Managed by: Ansible</p>
+                      <p>Provisioned by: Terraform</p>
+                  </div>
+                  <div class="info">
+                      <h3>Tech Stack</h3>
+                      <span class="badge">Terraform</span>
+                      <span class="badge">Ansible</span>
+                      <span class="badge">Docker</span>
+                      <span class="badge">NGINX</span>
+                      <span class="badge">Ubuntu 22.04</span>
+                      <span class="badge">Azure</span>
+                  </div>
+              </div>
+          </body>
+          </html>
+        mode: '0644'
+      notify: Restart NGINX
+
+    # ---------- Start & Enable NGINX ----------
+    - name: Start and enable NGINX service
+      systemd:
+        name: nginx
+        state: started
+        enabled: yes
+
+    # ---------- Verification ----------
+    - name: Verify NGINX is running
+      command: systemctl status nginx
+      register: nginx_status
+      changed_when: false
+
+    - name: Check NGINX responds on port 80
+      uri:
+        url: "http://localhost"
+        status_code: 200
+      register: nginx_response
+      changed_when: false
+
+    - name: Display NGINX status
+      debug:
+        msg: "NGINX is running and responding on port 80 on {{ inventory_hostname }}"
+
+  handlers:
+    - name: Restart NGINX
+      systemd:
+        name: nginx
+        state: restarted
